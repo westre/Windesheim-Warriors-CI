@@ -15,7 +15,7 @@ namespace WindesHeim_Game
         protected Model model;
         protected GameWindow gameWindow;
         public Controller(GameWindow form)
-        { 
+        {
             this.gameWindow = form;
             this.model = new Model(this);
         }
