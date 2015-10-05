@@ -83,53 +83,77 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
             gameWindow.Controls.Add(tempPlay);
+
+            //XML loading test
+            //XML test = new XML("");
+            //test.Read();            
+        }
         }
 
-        public Button PlayButton
-        {
-            get { return play; }
-        }
-
-        public Button EditorButton
-        {
-            get { return editor; }
-        }
-
-        public Button HighScoreButton
-        {
-            get { return highscore; }
-        }
-    }
-
-    public class ModelGame : Model
-    {
+    public class ModelGame : Model {
         private ControllerGame gameController;
 
-        public Player player = new Player(new Point(10,10), "../Player.png");
+        // Houdt alle dynamische gameobjecten vast
+        private List<GameObject> gameObjects;
         
+        // Er is maar 1 speler
+        public Player player = new Player(new Point(10, 10), "../Player.png");
+
         public ModelGame(ControllerGame controller) : base(controller)
         {
             this.gameController = controller;
+
+            gameObjects = new List<GameObject>();
+            
+            // Toevoegen aan list, zodat we het kunnen volgen
+            gameObjects.Add(new FollowingObstacle(new Point(20, 20), "../Player.png"));
+            gameObjects.Add(new FollowingObstacle(new Point(360, 20), "../Player.png"));
+            gameObjects.Add(new FollowingObstacle(new Point(120, 520), "../Player.png"));
         }
 
         public override void ControlsInit(Form gameWindow)
         {
+            // Voeg speler toe aan panel
             gameWindow.Controls.Add(player.Image);
 
+            // Voeg alle gameobjecten toe aan panel
+            foreach(GameObject gameObject in gameObjects) {
+                gameWindow.Controls.Add(gameObject.Image);
+            }
+          
+            // Registreer key events voor de player
+            gameWindow.KeyDown += gameController.OnKeyDown;
             gameWindow.KeyPress += gameController.OnKeyPress;
+            gameWindow.KeyUp += gameController.OnKeyUp;
+        }
+
+        public List<GameObject> GameObjects {
+            get { return gameObjects; }
         }
     }
+
     public class ModelLevelSelect : Model
     {
         private ControllerLevelSelect levelSelectController;
 
-        public ModelLevelSelect(ControllerLevelSelect controller) : base(controller)
-        {
+        public ModelLevelSelect(ControllerLevelSelect controller) : base(controller) {
             this.levelSelectController = controller;
+        }
+
+        public override void ControlsInit(Form gameWindow) {
+        }
+    }
+
+    public class ModelHighscores : Model
+    {
+        public ModelHighscores(Controller controller) : base(controller)
+        {
+
         }
 
         public override void ControlsInit(Form gameWindow)
         {
+        // todo
         }
     }
 }
