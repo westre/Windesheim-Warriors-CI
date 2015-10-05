@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace WindesHeim_Game
 {
-    public enum ScreenStates
+    public enum ScreenStates //Jonathan vs Kevin
     {
         menu,
         gameSelect,
