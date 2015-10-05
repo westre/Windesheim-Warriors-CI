@@ -76,10 +76,13 @@ namespace WindesHeim_Game
         {
             ProcessUserInput();
             ProcessObstacles();
+
+            // Als laatste refreshen we de graphics
+            gameWindow.Invalidate();
         }
 
         private void ProcessUserInput() 
-            {
+        {
             ModelGame mg = (ModelGame) model;
 
             if (pressedDown && isKeyDown) {
@@ -136,11 +139,11 @@ namespace WindesHeim_Game
             }
             if (e.KeyChar == 'a') {
                 pressedLeft = true;
-                mg.player.Image.Load("../PlayerLeft.png");
+                mg.player.ImageURL = "../PlayerLeft.png";
             }
             if (e.KeyChar == 'd') {
                 pressedRight = true;
-                mg.player.Image.Load("../Player.png");
+                mg.player.ImageURL = "../Player.png";
             }
         }
 

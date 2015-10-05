@@ -48,6 +48,7 @@ namespace WindesHeim_Game
             this.Text = "Windesheim Warriors";
             this.ResumeLayout(false);
 
+            DoubleBuffered = true;
         }
 
         public void setController(ScreenStates state)
@@ -82,7 +83,9 @@ namespace WindesHeim_Game
 
         protected override void OnPaint(PaintEventArgs pe)
         {
+            base.OnPaint(pe);
             Graphics g = pe.Graphics;
+
             switch (state)
             {
                 case ScreenStates.menu:
@@ -93,6 +96,10 @@ namespace WindesHeim_Game
                     break;
                 case ScreenStates.game:
                     this.state = ScreenStates.game;
+                    
+                    // Voor game hebben we graphics nodig
+                    game.GraphicsInit(g);
+
                     break;
                 case ScreenStates.editorSelect:
                     this.state = ScreenStates.editorSelect;

@@ -113,18 +113,22 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            // Voeg speler toe aan panel
-            gameWindow.Controls.Add(player.Image);
-
-            // Voeg alle gameobjecten toe aan panel
-            foreach(GameObject gameObject in gameObjects) {
-                gameWindow.Controls.Add(gameObject.Image);
-            }
-          
             // Registreer key events voor de player
             gameWindow.KeyDown += gameController.OnKeyDown;
             gameWindow.KeyPress += gameController.OnKeyPress;
             gameWindow.KeyUp += gameController.OnKeyUp;
+
+            gameWindow.Invalidate();
+        }
+
+        public override void GraphicsInit(Graphics g) {
+            // Teken player
+            g.DrawImage(Image.FromFile(player.ImageURL), new Point(player.Location.X, player.Location.Y));
+
+            // Teken andere gameobjects
+            foreach (FollowingObstacle followingObstacle in GameObjects) {
+                g.DrawImage(Image.FromFile(followingObstacle.ImageURL), new Point(followingObstacle.Location.X, followingObstacle.Location.Y));
+            }
         }
 
         public List<GameObject> GameObjects {
