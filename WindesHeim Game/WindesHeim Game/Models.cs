@@ -82,54 +82,23 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
-            gameWindow.Controls.Add(tempPlay);
-        }
 
-        public Button PlayButton
-        {
-            get { return play; }
-        }
-
-        public Button EditorButton
-        {
-            get { return editor; }
-        }
-
-        public Button HighScoreButton
-        {
-            get { return highscore; }
+            //XML loading test
+            XML test = new XML("");
+            test.Read();            
         }
     }
 
-    public class ModelGame : Model
+    public class ModelHighscores : Model
     {
-        private ControllerGame gameController;
-
-        public Player player = new Player(new Point(10,10), "../Player.png");
-        
-        public ModelGame(ControllerGame controller) : base(controller)
+        public ModelHighscores(Controller controller) : base(controller)
         {
-            this.gameController = controller;
+
         }
 
         public override void ControlsInit(Form gameWindow)
         {
-            gameWindow.Controls.Add(player.Image);
-
-            gameWindow.KeyPress += gameController.OnKeyPress;
-        }
-    }
-    public class ModelLevelSelect : Model
-    {
-        private ControllerLevelSelect levelSelectController;
-
-        public ModelLevelSelect(ControllerLevelSelect controller) : base(controller)
-        {
-            this.levelSelectController = controller;
-        }
-
-        public override void ControlsInit(Form gameWindow)
-        {
+        // todo
         }
     }
 }

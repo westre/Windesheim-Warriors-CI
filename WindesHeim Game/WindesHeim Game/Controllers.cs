@@ -108,18 +108,13 @@ namespace WindesHeim_Game
             if (e.KeyChar == 's')
             {
                 isDown = true;
-            }
-            if (e.KeyChar == 'a')
-            {
-                isLeft = true;
-                mg.player.Image.Load("../PlayerLeft.png");
-            }
-            if (e.KeyChar == 'd')
-            {
-                isLeft = false;
-                mg.player.Image.Load("../Player.png");
-            }
-        }
     }
 
+    class ControllerHighscores : Controller
+    {
+        public ControllerHighscores(GameWindow form) : base(form)
+        {
+            this.model = new ModelMenu(this);
+        }
+    }
 }
