@@ -17,7 +17,6 @@ namespace WindesHeim_Game
         public Controller(GameWindow form)
         { 
             this.gameWindow = form;
-            this.model = new Model(this);
         }
         public virtual void RunController()
         {
@@ -40,7 +39,6 @@ namespace WindesHeim_Game
     {
         public ControllerMenu(GameWindow form) : base(form)
         {
-            this.gameWindow = form;
             this.model = new ModelMenu(this);
         }
     }
