@@ -54,6 +54,11 @@ namespace WindesHeim_Game
         {
             this.model = new ModelLevelSelect(this);
         }
+
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
+        }
     }
 
     public class ControllerGame : Controller

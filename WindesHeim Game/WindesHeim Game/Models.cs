@@ -137,6 +137,8 @@ namespace WindesHeim_Game
     public class ModelLevelSelect : Model
     {
         private ListBox levels;
+        private Button goBack;
+        private Panel alignPanel;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -145,6 +147,11 @@ namespace WindesHeim_Game
         }
 
         public override void ControlsInit(Form gameWindow) {
+            alignPanel = new Panel();
+            alignPanel.Location = new System.Drawing.Point(60, 60);
+            alignPanel.Size = new System.Drawing.Size(500, 500);
+
+
             levels = new ListBox();
             levels.Size = new System.Drawing.Size(200, 100);
             levels.Location = new System.Drawing.Point(10, 10);
@@ -153,7 +160,15 @@ namespace WindesHeim_Game
                 levels.Items.Add("Level " + i);
             }
 
-            gameWindow.Controls.Add(levels);
+            goBack = new Button();
+            goBack.Size = new System.Drawing.Size(200, 25);
+            goBack.Location = new System.Drawing.Point(10, 115);
+            goBack.Text = "Go Back";
+            goBack.Click += new EventHandler(levelSelectController.goBack_Click);
+
+            gameWindow.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(levels);
         }
     }
 
