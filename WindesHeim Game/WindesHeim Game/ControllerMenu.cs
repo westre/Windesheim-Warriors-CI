@@ -21,14 +21,13 @@ namespace WindesHeim_Game
     }
     public class Controller
     {
-        private Model view;
-        private GameWindow form;
+        private Model model;
+        private GameWindow gameWindow;
         public Controller(GameWindow form)
         {
-            this.form = form;
-            this.view = new Model(form, this);
+            this.gameWindow = form;
+            this.model = new Model(this);
         }
-
         public virtual void RunController()
         {
             ScreenInit();
@@ -36,13 +35,13 @@ namespace WindesHeim_Game
 
         public virtual void ScreenInit()
         {
-            form.Controls.Clear();
-            view.ControlsInit();
+            gameWindow.Controls.Clear();
+            model.ControlsInit(gameWindow);
         }
 
         public virtual void GraphicsInit(Graphics g)
         {
-            view.GraphicsInit(g);
+            model.GraphicsInit(g);
         }
     }
 
@@ -58,32 +57,19 @@ namespace WindesHeim_Game
 
     public class Model
     {
-        private GameWindow form;
         private Controller controller;
 
-        public Model(GameWindow form, Controller controller)
+        public Model(Controller controller)
         {
             this.controller = controller;
-            this.form = form;
         }
 
-        public virtual void ControlsInit()
+        public virtual void ControlsInit(Form GameWindow)
         {
         }
 
         public virtual void GraphicsInit(Graphics g)
         {
-            Rectangle rect = new Rectangle(50, 30, 100, 100);
-            LinearGradientBrush lBrush = new LinearGradientBrush(rect, Color.Red, Color.Yellow, LinearGradientMode.BackwardDiagonal);
-            g.FillRectangle(lBrush, rect);
-        }
-    }
-
-    public class ModelHighscore : Model
-    {
-        public ModelHighscore(GameWindow form, ControllerHighscore controller) : base(form,controller)
-        {
-
         }
     }
 }
