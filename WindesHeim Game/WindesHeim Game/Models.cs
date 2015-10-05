@@ -95,7 +95,6 @@ namespace WindesHeim_Game
 
         // Houdt alle dynamische gameobjecten vast
         private List<GameObject> gameObjects;
-        public Player player = new Player(new Point(10, 10), "../Player.png");
         
         // Er is maar 1 speler
         public Player player = new Player(new Point(10, 10), "../Player.png");
