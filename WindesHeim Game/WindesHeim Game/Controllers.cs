@@ -88,33 +88,38 @@ namespace WindesHeim_Game
             {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
             }
-        }
-
-        
+        }  
 
         public override void RunController()
         {
             base.RunController();
         }
 
-        public void OnKeyPress(object sender, KeyPressEventArgs e)
-        {
+        public void OnKeyPress(object sender, KeyPressEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
-            if (e.KeyChar == 'w')
-            {
-                isDown = false;               
+            if (e.KeyChar == 'w') {
+                isDown = false;
             }
-            if (e.KeyChar == 's')
-            {
+            if (e.KeyChar == 's') {
                 isDown = true;
+            }
+            if (e.KeyChar == 'a') {
+                isLeft = true;
+                mg.player.Image.Load("../PlayerLeft.png");
+            }
+            if (e.KeyChar == 'd') {
+                isLeft = false;
+                mg.player.Image.Load("../Player.png");
+            }
+        }
     }
 
     class ControllerHighscores : Controller
     {
         public ControllerHighscores(GameWindow form) : base(form)
         {
-            this.model = new ModelMenu(this);
+            this.model = new ModelHighscores(this);
         }
     }
 }
