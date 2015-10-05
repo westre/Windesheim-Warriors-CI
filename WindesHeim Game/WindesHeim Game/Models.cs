@@ -88,7 +88,7 @@ namespace WindesHeim_Game
             //XML test = new XML("");
             //test.Read();            
         }
-        }
+    }
 
     public class ModelGame : Model {
         private ControllerGame gameController;
@@ -98,6 +98,9 @@ namespace WindesHeim_Game
         
         // Er is maar 1 speler
         public Player player = new Player(new Point(10, 10), "../Player.png");
+
+        // Graphicspaneel
+        public PictureBox graphicsPanel = new PictureBox();
 
         public ModelGame(ControllerGame controller) : base(controller)
         {
@@ -118,17 +121,15 @@ namespace WindesHeim_Game
             gameWindow.KeyPress += gameController.OnKeyPress;
             gameWindow.KeyUp += gameController.OnKeyUp;
 
-            gameWindow.Invalidate();
-        }
+            // Voeg graphicspaneel toe voor het tekenen van gameobjecten
+            graphicsPanel.BackColor = Color.SeaGreen; // testje
+            graphicsPanel.Location = new Point(0, 0);
+            graphicsPanel.Size = new Size(1000, 500);
+            graphicsPanel.Paint += gameController.OnPaintEvent;
 
-        public override void GraphicsInit(Graphics g) {
-            // Teken player
-            g.DrawImage(Image.FromFile(player.ImageURL), new Point(player.Location.X, player.Location.Y));
+            // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
 
-            // Teken andere gameobjects
-            foreach (FollowingObstacle followingObstacle in GameObjects) {
-                g.DrawImage(Image.FromFile(followingObstacle.ImageURL), new Point(followingObstacle.Location.X, followingObstacle.Location.Y));
-            }
+            gameWindow.Controls.Add(graphicsPanel);
         }
 
         public List<GameObject> GameObjects {

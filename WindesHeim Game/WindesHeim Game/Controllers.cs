@@ -77,8 +77,8 @@ namespace WindesHeim_Game
             ProcessUserInput();
             ProcessObstacles();
 
-            // Als laatste refreshen we de graphics
-            gameWindow.Invalidate();
+            ModelGame mg = (ModelGame)model;
+            mg.graphicsPanel.Invalidate();
         }
 
         private void ProcessUserInput() 
@@ -114,6 +114,19 @@ namespace WindesHeim_Game
             base.RunController();
         }
 
+        public void OnPaintEvent(object sender, PaintEventArgs pe) {
+            Graphics g = pe.Graphics;
+            ModelGame mg = (ModelGame)model;
+
+            // Teken player
+            g.DrawImage(Image.FromFile(mg.player.ImageURL), new Point(mg.player.Location.X, mg.player.Location.Y));
+
+            // Teken andere gameobjects
+            foreach (FollowingObstacle followingObstacle in mg.GameObjects) {
+                g.DrawImage(Image.FromFile(followingObstacle.ImageURL), new Point(followingObstacle.Location.X, followingObstacle.Location.Y));
+            }
+        }
+
         public void OnKeyDown(object sender, KeyEventArgs e) {
             if(!isKeyDown) {
                 isKeyDown = true;
@@ -127,7 +140,7 @@ namespace WindesHeim_Game
             Console.WriteLine("KeyDown");
         }
 
-        internal void OnKeyPress(object sender, KeyPressEventArgs e) {
+        public void OnKeyPress(object sender, KeyPressEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
             // Dit werkt nog niet fijn

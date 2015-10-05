@@ -47,8 +47,6 @@ namespace WindesHeim_Game
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
             this.ResumeLayout(false);
-
-            DoubleBuffered = true;
         }
 
         public void setController(ScreenStates state)
@@ -96,10 +94,6 @@ namespace WindesHeim_Game
                     break;
                 case ScreenStates.game:
                     this.state = ScreenStates.game;
-                    
-                    // Voor game hebben we graphics nodig
-                    game.GraphicsInit(g);
-
                     break;
                 case ScreenStates.editorSelect:
                     this.state = ScreenStates.editorSelect;
