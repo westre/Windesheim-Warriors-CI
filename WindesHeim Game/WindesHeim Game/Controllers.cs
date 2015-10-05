@@ -42,6 +42,10 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.game);
         }
+        public void play_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.gameSelect);
+        }
     }
 
     public class ControllerLevelSelect : Controller

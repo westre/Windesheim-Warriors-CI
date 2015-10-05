@@ -77,6 +77,8 @@ namespace WindesHeim_Game
             this.tempPlay.Text = "play test";
             this.tempPlay.UseVisualStyleBackColor = true;
 
+            this.play.Click += new EventHandler(menuController.play_Click);
+
             this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
             gameWindow.Controls.Add(play);
@@ -134,6 +136,8 @@ namespace WindesHeim_Game
 
     public class ModelLevelSelect : Model
     {
+        private ListBox levels;
+
         private ControllerLevelSelect levelSelectController;
 
         public ModelLevelSelect(ControllerLevelSelect controller) : base(controller) {
@@ -141,6 +145,15 @@ namespace WindesHeim_Game
         }
 
         public override void ControlsInit(Form gameWindow) {
+            levels = new ListBox();
+            levels.Size = new System.Drawing.Size(200, 100);
+            levels.Location = new System.Drawing.Point(10, 10);
+            for (int i = 0; i < 11; i ++)
+            {
+                levels.Items.Add("Level " + i);
+            }
+
+            gameWindow.Controls.Add(levels);
         }
     }
 
