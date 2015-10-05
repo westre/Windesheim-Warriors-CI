@@ -41,11 +41,15 @@ namespace WindesHeim_Game
 
         public void button_Click(object sender, EventArgs e)
         {
-            Button button = sender as Button;
-
             gameWindow.setController(ScreenStates.game);
+        }
+    }
 
-            button.Enabled = false;           
+    public class ControllerLevelSelect : Controller
+    {
+        public ControllerLevelSelect(GameWindow form) : base(form)
+        {
+            this.model = new ModelLevelSelect(this);
         }
     }
 

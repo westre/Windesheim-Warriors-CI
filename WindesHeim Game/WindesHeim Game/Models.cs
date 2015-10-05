@@ -119,4 +119,17 @@ namespace WindesHeim_Game
             gameWindow.KeyPress += gameController.OnKeyPress;
         }
     }
+    public class ModelLevelSelect : Model
+    {
+        private ControllerLevelSelect levelSelectController;
+
+        public ModelLevelSelect(ControllerLevelSelect controller) : base(controller)
+        {
+            this.levelSelectController = controller;
+        }
+
+        public override void ControlsInit(Form gameWindow)
+        {
+        }
+    }
 }
