@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading;
-using System.Timers;
 using System.Windows.Forms;
 
 namespace WindesHeim_Game
@@ -55,9 +54,14 @@ namespace WindesHeim_Game
 
     public class ControllerGame : Controller
     {
+        // Timer voor de gameloop
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        private bool isDown = false;
-        private bool isLeft = false;
+
+        private bool pressedLeft = false;
+        private bool pressedRight = false;
+        private bool pressedUp = false;
+        private bool pressedDown = false;
+        private bool isKeyDown = false;
 
         public ControllerGame(GameWindow form) : base(form)
         {
@@ -70,48 +74,82 @@ namespace WindesHeim_Game
 
         private void GameLoop(object sender, EventArgs e)
         {
-            ModelGame mg = (ModelGame)model;
+            ProcessUserInput();
+            ProcessObstacles();
+        }
 
-            if (isDown)
+        private void ProcessUserInput() 
             {
-                mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
-            }
-            if (!isDown)
-            {
+            ModelGame mg = (ModelGame) model;
+
+            if (pressedDown && isKeyDown) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
             }
-            if (isLeft)
-            {
+            if (pressedUp && isKeyDown) {
+                mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
+            }
+            if (pressedLeft && isKeyDown) {
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
             }
-            if (!isLeft)
-            {
+            if (pressedRight && isKeyDown) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
             }
-        }  
+        }
+
+        private void ProcessObstacles() 
+        {
+            ModelGame mg = (ModelGame) model;
+
+            // Loop door alle FollowingObstacle objecten en roep methode aan
+            foreach(FollowingObstacle followingObstacle in mg.GameObjects) {
+                followingObstacle.ChasePlayer(mg.player);
+            }      
+        }
 
         public override void RunController()
         {
             base.RunController();
         }
 
-        public void OnKeyPress(object sender, KeyPressEventArgs e) {
+        public void OnKeyDown(object sender, KeyEventArgs e) {
+            if(!isKeyDown) {
+                isKeyDown = true;
+
+                pressedDown = false;
+                pressedLeft = false;
+                pressedRight = false;
+                pressedUp = false;
+            }
+
+            Console.WriteLine("KeyDown");
+        }
+
+        internal void OnKeyPress(object sender, KeyPressEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
+            // Dit werkt nog niet fijn
             if (e.KeyChar == 'w') {
-                isDown = false;
+                pressedUp = true;
             }
             if (e.KeyChar == 's') {
-                isDown = true;
+                pressedDown = true;
             }
             if (e.KeyChar == 'a') {
-                isLeft = true;
+                pressedLeft = true;
                 mg.player.Image.Load("../PlayerLeft.png");
             }
             if (e.KeyChar == 'd') {
-                isLeft = false;
+                pressedRight = true;
                 mg.player.Image.Load("../Player.png");
             }
+        }
+
+        public void OnKeyUp(object sender, KeyEventArgs e) {
+            if (isKeyDown) {
+                isKeyDown = false;
+            }
+
+            Console.WriteLine("KeyUp");
         }
     }
 
