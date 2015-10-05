@@ -30,14 +30,16 @@ namespace WindesHeim_Game
 
     public class ModelMenu : Model
     {
+        private ControllerMenu menuController;
 
         private Button play;
         private Button editor;
         private Button highscore;
+        private Button tempPlay;
 
-        public ModelMenu(Controller controller) : base(controller)
+        public ModelMenu(ControllerMenu controller) : base(controller)
         {
-
+            this.menuController = controller;
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -45,6 +47,7 @@ namespace WindesHeim_Game
             this.play = new System.Windows.Forms.Button();
             this.editor = new System.Windows.Forms.Button();
             this.highscore = new System.Windows.Forms.Button();
+            this.tempPlay = new System.Windows.Forms.Button();
 
             this.play.Location = new System.Drawing.Point(254, 52);
             this.play.Name = "play";
@@ -67,7 +70,15 @@ namespace WindesHeim_Game
             this.highscore.Text = "highscore";
             this.highscore.UseVisualStyleBackColor = true;
 
-            //test
+            this.tempPlay.Location = new System.Drawing.Point(254, 169);
+            this.tempPlay.Name = "play test";
+            this.tempPlay.Size = new System.Drawing.Size(259, 33);
+            this.tempPlay.TabIndex = 2;
+            this.tempPlay.Text = "play test";
+            this.tempPlay.UseVisualStyleBackColor = true;
+
+            this.tempPlay.Click += new EventHandler(menuController.button_Click);
+
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
