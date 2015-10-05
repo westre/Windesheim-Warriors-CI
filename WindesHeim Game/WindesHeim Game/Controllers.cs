@@ -42,4 +42,12 @@ namespace WindesHeim_Game
             this.model = new ModelMenu(this);
         }
     }
+
+    class ControllerHighscores : Controller
+    {
+        public ControllerHighscores(GameWindow form) : base(form)
+        {
+            this.model = new ModelMenu(this);
+        }
+    }
 }

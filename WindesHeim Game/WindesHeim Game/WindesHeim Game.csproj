@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XML.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Controllers.cs" />
     <Compile Include="GameWindow.cs">
@@ -68,6 +69,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="..\..\..\..\..\Documents\ClassDiagram3.cd">
+      <Link>ClassDiagram3.cd</Link>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

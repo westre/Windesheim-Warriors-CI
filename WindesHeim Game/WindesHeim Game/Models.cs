@@ -71,6 +71,23 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
+
+            //XML loading test
+            XML test = new XML("");
+            test.Read();            
+        }
+    }
+
+    public class ModelHighscores : Model
+    {
+        public ModelHighscores(Controller controller) : base(controller)
+        {
+
+        }
+
+        public override void ControlsInit(Form gameWindow)
+        {
+        // todo
         }
     }
 }
