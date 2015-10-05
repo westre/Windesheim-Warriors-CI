@@ -72,5 +72,20 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
         }
+
+        public Button PlayButton
+        {
+            get { return play; }
+        }
+
+        public Button EditorButton
+        {
+            get { return editor; }
+        }
+
+        public Button HighScoreButton
+        {
+            get { return highscore; }
+        }
     }
 }
