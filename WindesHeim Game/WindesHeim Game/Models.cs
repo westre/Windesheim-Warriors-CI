@@ -67,6 +67,8 @@ namespace WindesHeim_Game
             this.highscore.Text = "Play";
             this.highscore.UseVisualStyleBackColor = true;
 
+
+
             //test
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
