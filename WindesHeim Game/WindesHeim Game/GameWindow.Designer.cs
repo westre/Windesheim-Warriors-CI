@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WindesHeim_Game
 {
-    public enum ScreenStates
+    public enum ScreenStates //Jonathan vs Kevin
     {
         menu,
         gameSelect,
@@ -15,7 +15,6 @@ namespace WindesHeim_Game
     }
     partial class GameWindow
     {
-        private ControllerMenu menu;
 
         private ScreenStates state = ScreenStates.menu;
         private System.ComponentModel.IContainer components = null;
@@ -31,7 +30,6 @@ namespace WindesHeim_Game
 
         private void InitializeComponent()
         {
-            menu = new ControllerMenu(this);
 
             this.setController(ScreenStates.menu);
 
@@ -53,7 +51,6 @@ namespace WindesHeim_Game
             {
                 case ScreenStates.menu:
                     this.state = ScreenStates.menu;
-                    menu.RunController();
                     break;
                 case ScreenStates.gameSelect:
                     this.state = ScreenStates.gameSelect;
