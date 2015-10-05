@@ -27,10 +27,8 @@ namespace WindesHeim_Game
         {
             this.image.Load(imageURL);
             this.image.Location = location;
-            this.image.Name = "pictureBox2";
-            this.image.Size = new System.Drawing.Size(128, 128);
-            this.image.TabIndex = 1;
-            this.image.TabStop = false;
+            this.image.Size = new Size(128, 128);
+            this.image.BackColor = Color.Transparent;
         }
 
         public PictureBox Image
