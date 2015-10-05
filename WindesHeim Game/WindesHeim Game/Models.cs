@@ -30,14 +30,16 @@ namespace WindesHeim_Game
 
     public class ModelMenu : Model
     {
+        private ControllerMenu menuController;
 
         private Button play;
         private Button editor;
         private Button highscore;
+        private Button tempPlay;
 
-        public ModelMenu(Controller controller) : base(controller)
+        public ModelMenu(ControllerMenu controller) : base(controller)
         {
-
+            this.menuController = controller;
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -45,6 +47,7 @@ namespace WindesHeim_Game
             this.play = new System.Windows.Forms.Button();
             this.editor = new System.Windows.Forms.Button();
             this.highscore = new System.Windows.Forms.Button();
+            this.tempPlay = new System.Windows.Forms.Button();
 
             this.play.Location = new System.Drawing.Point(254, 52);
             this.play.Name = "play";
@@ -67,12 +70,19 @@ namespace WindesHeim_Game
             this.highscore.Text = "highscore";
             this.highscore.UseVisualStyleBackColor = true;
 
+            this.tempPlay.Location = new System.Drawing.Point(254, 169);
+            this.tempPlay.Name = "play test";
+            this.tempPlay.Size = new System.Drawing.Size(259, 33);
+            this.tempPlay.TabIndex = 2;
+            this.tempPlay.Text = "play test";
+            this.tempPlay.UseVisualStyleBackColor = true;
 
+            this.tempPlay.Click += new EventHandler(menuController.button_Click);
 
-            //test
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
+            gameWindow.Controls.Add(tempPlay);
         }
 
         public Button PlayButton
@@ -88,6 +98,25 @@ namespace WindesHeim_Game
         public Button HighScoreButton
         {
             get { return highscore; }
+        }
+    }
+
+    public class ModelGame : Model
+    {
+        private ControllerGame gameController;
+
+        public Player player = new Player(new Point(10,10), "../Player.png");
+        
+        public ModelGame(ControllerGame controller) : base(controller)
+        {
+            this.gameController = controller;
+        }
+
+        public override void ControlsInit(Form gameWindow)
+        {
+            gameWindow.Controls.Add(player.Image);
+
+            gameWindow.KeyPress += gameController.OnKeyPress;
         }
     }
 }

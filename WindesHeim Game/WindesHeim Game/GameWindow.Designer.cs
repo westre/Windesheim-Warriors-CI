@@ -13,9 +13,11 @@ namespace WindesHeim_Game
         editor,
         highscore
     }
+
     partial class GameWindow
     {
         private ControllerMenu menu;
+        private ControllerGame game;
 
         private ScreenStates state = ScreenStates.menu;
         private System.ComponentModel.IContainer components = null;
@@ -32,6 +34,7 @@ namespace WindesHeim_Game
         private void InitializeComponent()
         {
             menu = new ControllerMenu(this);
+            game = new ControllerGame(this);
 
             this.setController(ScreenStates.menu);
 
@@ -60,6 +63,7 @@ namespace WindesHeim_Game
                     break;
                 case ScreenStates.game:
                     this.state = ScreenStates.game;
+                    game.RunController();
                     break;
                 case ScreenStates.editorSelect:
                     this.state = ScreenStates.editorSelect;
@@ -75,6 +79,7 @@ namespace WindesHeim_Game
                     break;
             }
         }
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             Graphics g = pe.Graphics;
