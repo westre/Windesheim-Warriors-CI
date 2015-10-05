@@ -10,19 +10,10 @@ using System.Windows.Forms;
 
 namespace WindesHeim_Game
 {
-    public enum ScreenStates //Jonathan vs Kevin
-    {
-        menu,
-        gameSelect,
-        game,
-        editorSelect,
-        editor,
-        highscore
-    }
     public class Controller
     {
-        private Model model;
-        private GameWindow gameWindow;
+        protected Model model;
+        protected GameWindow gameWindow;
         public Controller(GameWindow form)
         {
             this.gameWindow = form;
@@ -45,31 +36,12 @@ namespace WindesHeim_Game
         }
     }
 
-    public class ControllerHighscore : Controller
+    class ControllerMenu : Controller
     {
-        public ControllerHighscore(GameWindow form) : base(form)
+        public ControllerMenu(GameWindow form) : base(form)
         {
-
-        }
-    }
-
-
-
-    public class Model
-    {
-        private Controller controller;
-
-        public Model(Controller controller)
-        {
-            this.controller = controller;
-        }
-
-        public virtual void ControlsInit(Form GameWindow)
-        {
-        }
-
-        public virtual void GraphicsInit(Graphics g)
-        {
+            this.gameWindow = form;
+            this.model = new ModelMenu(this);
         }
     }
 }

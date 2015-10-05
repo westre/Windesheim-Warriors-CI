@@ -4,6 +4,15 @@ using System.Windows.Forms;
 
 namespace WindesHeim_Game
 {
+    public enum ScreenStates //Jonathan vs Kevin
+    {
+        menu,
+        gameSelect,
+        game,
+        editorSelect,
+        editor,
+        highscore
+    }
     partial class GameWindow
     {
 
