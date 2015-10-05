@@ -61,10 +61,10 @@ namespace WindesHeim_Game
             this.editor.UseVisualStyleBackColor = true;
 
             this.highscore.Location = new System.Drawing.Point(254, 130);
-            this.highscore.Name = "button2";
+            this.highscore.Name = "highscore";
             this.highscore.Size = new System.Drawing.Size(259, 33);
             this.highscore.TabIndex = 2;
-            this.highscore.Text = "Play";
+            this.highscore.Text = "highscore";
             this.highscore.UseVisualStyleBackColor = true;
 
             //test
