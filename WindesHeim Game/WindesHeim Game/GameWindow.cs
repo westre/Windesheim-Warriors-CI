@@ -12,9 +12,15 @@ namespace WindesHeim_Game
 {
     public partial class GameWindow : Form
     {
+        PlayerController playerController;
+
         public GameWindow()
         {
             InitializeComponent();
+
+            playerController = new PlayerController(this);
+
         }
+
     }
 }
