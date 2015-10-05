@@ -10,14 +10,6 @@ namespace WindesHeim_Game
         private ScreenStates state = ScreenStates.menu;
         private System.ComponentModel.IContainer components = null;
 
-        private Controller menu;
-        //private Controller gameSelect;
-        //private Controller game;
-        //private Controller editorSelect;
-        //private Controller editor;
-        //private Controller highscoreSelect;
-        //private Controller highscore;
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -29,7 +21,6 @@ namespace WindesHeim_Game
 
         private void InitializeComponent()
         {
-            menu = new Controller(this);
 
             this.setController(ScreenStates.menu);
 
@@ -51,7 +42,6 @@ namespace WindesHeim_Game
             {
                 case ScreenStates.menu:
                     this.state = ScreenStates.menu;
-                    menu.RunController();
                     break;
                 case ScreenStates.gameSelect:
                     this.state = ScreenStates.gameSelect;
@@ -79,7 +69,7 @@ namespace WindesHeim_Game
             switch (state)
             {
                 case ScreenStates.menu:
-                    menu.GraphicsInit(g);
+                    this.state = ScreenStates.menu;
                     break;
                 case ScreenStates.gameSelect:
                     this.state = ScreenStates.gameSelect;
