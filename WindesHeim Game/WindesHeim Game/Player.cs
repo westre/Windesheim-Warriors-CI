@@ -16,11 +16,9 @@ namespace WindesHeim_Game
 
         public Player(Point location, int height, int width) : base (location, height, width)
         {
-            base.ImageURL = "../Player.png";
+            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png";
             this.speed = 5;
         }
-
-        
 
         public int Speed
         {
