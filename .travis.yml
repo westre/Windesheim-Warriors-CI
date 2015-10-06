@@ -1,2 +1,2 @@
 ﻿language: csharp
-solution: "/WindesHeim Game/WindesHeim Game.sln"
+solution: "./WindesHeim Game/WindesHeim Game.sln"
