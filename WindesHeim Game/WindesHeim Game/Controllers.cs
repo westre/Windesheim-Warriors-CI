@@ -47,18 +47,10 @@ namespace WindesHeim_Game
         {
             gameWindow.setController(ScreenStates.gameSelect);
         }
-    }
 
-    public class ControllerLevelSelect : Controller
-    {
-        public ControllerLevelSelect(GameWindow form) : base(form)
+        public void highscores_Click(object sender, EventArgs e)
         {
-            this.model = new ModelLevelSelect(this);
-        }
-
-        public void goBack_Click(object sender, EventArgs e)
-        {
-            gameWindow.setController(ScreenStates.menu);
+            gameWindow.setController(ScreenStates.highscore);
         }
     }
 
@@ -272,11 +264,28 @@ namespace WindesHeim_Game
         }
     }
 
-    class ControllerHighscores : Controller
+    public class ControllerLevelSelect : Controller
+    {
+        public ControllerLevelSelect(GameWindow form) : base(form)
+        {
+            this.model = new ModelLevelSelect(this);
+        }
+
+        public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
+        }
+    }
+
+    public class ControllerHighscores : Controller
     {
         public ControllerHighscores(GameWindow form) : base(form)
         {
             this.model = new ModelHighscores(this);
+        }
+                public void goBack_Click(object sender, EventArgs e)
+        {
+            gameWindow.setController(ScreenStates.menu);
         }
     }
 }

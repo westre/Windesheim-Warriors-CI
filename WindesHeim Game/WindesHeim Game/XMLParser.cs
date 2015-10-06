@@ -12,6 +12,7 @@ namespace WindesHeim_Game
     //Voorbeeld voor titel: 
     //Console.Write(level1.gameProperties.title);
     //Voorbeeld om highscores te doorlopen
+    //level1.ReadXML();
     //foreach(GameHighscores highscore in level1.gameHighscores)
     //{
     //    Console.Write(highscore.name + " " + highscore.score);
@@ -59,7 +60,7 @@ namespace WindesHeim_Game
         }
 
         //Funtie om XML bestand in te laden, daarna kan je de vastgelegde variablen in deze klasse gebruiken
-        public void ParseXML()
+        public void ReadXML()
         {
             //Laad het XML bestand in een document object
             XDocument doc = XDocument.Load(this.path);
@@ -176,7 +177,7 @@ namespace WindesHeim_Game
             {
                 xmlWriter.WriteStartElement("object");
 
-                string gameObjectType;
+                string gameObjectType = "";
                 if (gameObject is Player)
                 {
                     gameObjectType = "Player";
@@ -185,7 +186,7 @@ namespace WindesHeim_Game
                 {
                     gameObjectType = "Car";
                 }
-                else if (gameObject is FollowingObstacle)
+                else if (gameObject is MovingExplodingObstacle)
                 {
                     gameObjectType = "Cyclist";
                 }
