@@ -168,8 +168,33 @@ namespace WindesHeim_Game
                     }
                 }
 
+                if (gameObject is StaticObstacle)
+                {
+                    StaticObstacle gameObstacle = (StaticObstacle)gameObject;
+
+                    if (gameObstacle.CollidesWith(mg.player))
+                    {
+                        if (pressedUp)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
+                        }
+                        if (pressedDown)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
+                        }
+                        if (pressedLeft)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
+                        }
+                        if (pressedRight)
+                        {
+                            mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
+                        }
+                    }
+                }
+
                 // Check of we de explosie kunnen verwijderen
-                if(gameObject is Explosion) {
+                if (gameObject is Explosion) {
                     Explosion explosion = (Explosion)gameObject;
 
                     DateTime nowDateTime = DateTime.Now;
