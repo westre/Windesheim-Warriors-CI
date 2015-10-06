@@ -84,12 +84,7 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(play);
             gameWindow.Controls.Add(editor);
             gameWindow.Controls.Add(highscore);
-            gameWindow.Controls.Add(tempPlay);
-
-            //XML loading test
-            //XML test = new XML("");
-            //test.Write();
-            //test.Read();            
+            gameWindow.Controls.Add(tempPlay);         
         }
     }
 
