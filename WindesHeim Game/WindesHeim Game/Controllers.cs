@@ -94,16 +94,16 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame) model;
 
-            if (pressedDown && isKeyDown) {
+            if (pressedDown) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
             }
-            if (pressedUp && isKeyDown) {
+            if (pressedUp) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
             }
-            if (pressedLeft && isKeyDown) {
+            if (pressedLeft) {
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
             }
-            if (pressedRight && isKeyDown) {
+            if (pressedRight) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
             }
         }
@@ -136,19 +136,6 @@ namespace WindesHeim_Game
             }
         }
 
-        public void OnKeyDown(object sender, KeyEventArgs e) {
-            if(!isKeyDown) {
-                isKeyDown = true;
-
-                pressedDown = false;
-                pressedLeft = false;
-                pressedRight = false;
-                pressedUp = false;
-            }
-
-            Console.WriteLine("KeyDown");
-        }
-
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
@@ -170,8 +157,23 @@ namespace WindesHeim_Game
         }
 
         public void OnKeyUp(object sender, KeyEventArgs e) {
-            if (isKeyDown) {
-                isKeyDown = false;
+            if (e.KeyCode == Keys.W)
+            {
+                pressedUp = false;
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                pressedDown = false;
+            }
+            if (e.KeyCode == Keys.A)
+            {
+                pressedLeft = false;
+                
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                pressedRight = false;
+               
             }
 
             Console.WriteLine("KeyUp");

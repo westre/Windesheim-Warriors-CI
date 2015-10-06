@@ -14,7 +14,7 @@ namespace WindesHeim_Game
 
         public Player(Point location, string imageURL) : base (location, imageURL)
         {
-            this.speed = 2;
+            this.speed = 5;
         }
 
         public int Speed
