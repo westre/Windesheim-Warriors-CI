@@ -105,7 +105,19 @@ namespace WindesHeim_Game
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
 
-        public Panel panel2 = new Panel();
+        // Obstakelpanels
+        public Panel obstaclePanel1 = new Panel();
+
+        public Panel obstaclePanel2 = new Panel();
+
+        // Titelpaneel
+        public Panel gameTitlePanel = new Panel();
+
+        // Karakterpaneel
+        public Panel characterPanel = new Panel();
+
+        // Bedieningspaneel
+        public Panel controlsPanel = new Panel();
 
         public ModelGame(ControllerGame controller) : base(controller)
         {
@@ -129,17 +141,39 @@ namespace WindesHeim_Game
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
             graphicsPanel.BackColor = Color.SeaGreen; // testje
             graphicsPanel.Location = new Point(0, 0);
-            graphicsPanel.Size = new Size(845, 475);
+            graphicsPanel.Size = new Size(845, 480);
             graphicsPanel.Paint += gameController.OnPaintEvent;
 
-            panel2.Location = new Point(845, 0);
-            panel2.Size = new Size(100, 100);
-            panel2.BackColor = Color.Red;
+            // Overige panels
+
+            obstaclePanel1.Location = new Point(845, 0);
+            obstaclePanel1.Size = new Size(445, 240);
+            obstaclePanel1.BackColor = Color.White;
+
+            obstaclePanel2.Location = new Point(845, 240);
+            obstaclePanel2.Size = new Size(445, 240);
+            obstaclePanel2.BackColor = Color.White;
+
+            gameTitlePanel.Location = new Point(845, 480);
+            gameTitlePanel.Size = new Size(445, 240);
+            gameTitlePanel.BackColor = Color.White;
+
+            controlsPanel.Location = new Point(0, 480);
+            controlsPanel.Size = new Size(445, 240);
+            controlsPanel.BackColor = Color.White;
+
+            characterPanel.Location = new Point(445, 480);
+            characterPanel.Size = new Size(445, 240);
+            characterPanel.BackColor = Color.White;
 
             // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
 
             gameWindow.Controls.Add(graphicsPanel);
-            gameWindow.Controls.Add(panel2);
+            gameWindow.Controls.Add(obstaclePanel1);
+            gameWindow.Controls.Add(obstaclePanel2);
+            gameWindow.Controls.Add(gameTitlePanel);
+            gameWindow.Controls.Add(controlsPanel);
+            gameWindow.Controls.Add(characterPanel);
         }
 
         public List<GameObject> GameObjects {
