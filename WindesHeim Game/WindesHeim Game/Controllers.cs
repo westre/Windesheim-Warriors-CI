@@ -149,8 +149,8 @@ namespace WindesHeim_Game
 
                     if(gameObstacle.CollidesWith(mg.player)) {
                         mg.player.Location = new Point(0, 0);
-
-                        mg.GameObjects.Add(new Explosion(gameObstacle.Location));
+                        mg.InitializeField();
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
                     }
                 }
 
@@ -171,7 +171,8 @@ namespace WindesHeim_Game
 
                     if (gameObstacle.CollidesWith(mg.player)) {
                         mg.player.Location = new Point(0, 0);
-                        mg.GameObjects.Add(new Explosion(gameObstacle.Location));
+                        mg.InitializeField();
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
                     }
                 }
 

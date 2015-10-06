@@ -9,7 +9,7 @@ namespace WindesHeim_Game {
 
     class StaticObstacle : Obstacle {
 
-        public StaticObstacle(Point location) : base (location)
+        public StaticObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = "../IconTC.png";
         }

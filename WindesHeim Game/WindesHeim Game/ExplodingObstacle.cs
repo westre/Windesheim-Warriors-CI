@@ -9,13 +9,13 @@ namespace WindesHeim_Game {
 
     class ExplodingObstacle : Obstacle {
 
-        public ExplodingObstacle(Point location) : base (location)
+        public ExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = "../IconCar.png";
         }
 
         public bool CollidesWith(Player player) {
-            if (GetDistance(player.Location) < 50) {
+            if (GetDistance(player.Location) < 100) {
                 return true;
             }
             else {

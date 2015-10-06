@@ -98,7 +98,7 @@ namespace WindesHeim_Game
         private ControllerGame gameController;
 
         // Houdt alle dynamische gameobjecten vast
-        private List<GameObject> gameObjects;
+        private List<GameObject> gameObjects = new List<GameObject>();
         
         // Er is maar 1 speler
         public Player player = new Player(new Point(10, 10), 80, 80);
@@ -124,8 +124,12 @@ namespace WindesHeim_Game
         {
             this.gameController = controller;
 
-            gameObjects = new List<GameObject>();
-            
+            InitializeField();
+        }
+
+        public void InitializeField() {
+            gameObjects.Clear();
+
             // Toevoegen aan list, zodat we het kunnen volgen
             gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20), 80, 80));
             gameObjects.Add(new StaticObstacle(new Point(150, 200), 80, 80));

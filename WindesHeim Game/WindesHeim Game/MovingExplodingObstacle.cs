@@ -9,7 +9,7 @@ namespace WindesHeim_Game {
 
     class MovingExplodingObstacle : Obstacle {
 
-        public MovingExplodingObstacle(Point location) : base (location)
+        public MovingExplodingObstacle(Point location, int height, int width) : base (location, height, width)
         {
             base.ImageURL = "../IconBike.png";
         }

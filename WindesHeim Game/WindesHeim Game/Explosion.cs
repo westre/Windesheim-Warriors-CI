@@ -11,7 +11,7 @@ namespace WindesHeim_Game {
 
         private DateTime timeStamp = DateTime.Now;
 
-        public Explosion(Point location) : base (location)
+        public Explosion(Point location, int height, int width) : base (location, width, height)
         {
             base.ImageURL = "../explosion.png";
         }
