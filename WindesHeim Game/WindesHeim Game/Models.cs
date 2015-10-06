@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -184,7 +185,11 @@ namespace WindesHeim_Game
     {
         private ListBox levels;
         private Button goBack;
+        private Button playLevel;
+        private Label labelLevels;
+        private Label labelLevelPreview;
         private Panel alignPanel;
+        private Panel gamePanel;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -194,27 +199,59 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow) {
             alignPanel = new Panel();
-            alignPanel.Location = new System.Drawing.Point(60, 60);
-            alignPanel.Size = new System.Drawing.Size(500, 500);
+            alignPanel.AutoSize = true;
+
+
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(210, 40);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
 
 
             levels = new ListBox();
-            levels.Size = new System.Drawing.Size(200, 100);
-            levels.Location = new System.Drawing.Point(10, 10);
-            for (int i = 0; i < 11; i ++)
-            {
-                levels.Items.Add("Level " + i);
-            }
+            levels.Size = new System.Drawing.Size(200, 475);
+            levels.Location = new System.Drawing.Point(0, 40);
+            string[] fileEntries = Directory.GetFiles("../levels/");
+            foreach (string fileName in fileEntries)
+                levels.Items.Add(Path.GetFileName(fileName));
+
+            labelLevels = new Label();
+            labelLevels.Text = "Levels";
+            labelLevels.Font = new Font("Arial", 20);
+            labelLevels.Location = new System.Drawing.Point(0, 0);
+            labelLevels.Size = new System.Drawing.Size(200, 30);
+            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
+
+            labelLevelPreview = new Label();
+            labelLevelPreview.Text = "Level Preview";
+            labelLevelPreview.Font = new Font("Arial", 20);
+            labelLevelPreview.Location = new System.Drawing.Point(210, 0);
+            labelLevelPreview.Size = new System.Drawing.Size(845, 30);
+            labelLevelPreview.TextAlign = ContentAlignment.MiddleCenter;
 
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
-            goBack.Location = new System.Drawing.Point(10, 115);
+            goBack.Location = new System.Drawing.Point(0, 525);
             goBack.Text = "Go Back";
             goBack.Click += new EventHandler(levelSelectController.goBack_Click);
 
+            playLevel = new Button();
+            playLevel.Size = new System.Drawing.Size(845, 25);
+            playLevel.Location = new System.Drawing.Point(210, 525);
+            playLevel.Text = "Play Level";
+            playLevel.Click += new EventHandler(levelSelectController.goBack_Click);
+
             gameWindow.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(labelLevels);
+            alignPanel.Controls.Add(labelLevelPreview);
             alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(playLevel);
             alignPanel.Controls.Add(levels);
+            alignPanel.Controls.Add(gamePanel);
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+            alignPanel.Anchor = AnchorStyles.None;
         }
     }
 
