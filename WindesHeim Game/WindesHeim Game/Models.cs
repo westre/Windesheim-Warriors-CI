@@ -134,8 +134,7 @@ namespace WindesHeim_Game
         public override void ControlsInit(Form gameWindow)
         {
             // Registreer key events voor de player
-            gameWindow.KeyDown += gameController.OnKeyDown;
-            gameWindow.KeyPress += gameController.OnKeyPress;
+            gameWindow.KeyDown += gameController.OnKeyDownWASD;
             gameWindow.KeyUp += gameController.OnKeyUp;
 
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
