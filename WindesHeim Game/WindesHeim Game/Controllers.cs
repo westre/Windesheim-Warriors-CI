@@ -64,6 +64,7 @@ namespace WindesHeim_Game
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
+        private int counter;
 
        
 
@@ -74,13 +75,14 @@ namespace WindesHeim_Game
             timer.Tick += new EventHandler(GameLoop);
             timer.Interval = 16;
             timer.Start();
+            
         }
 
         private void GameLoop(object sender, EventArgs e)
         {
             ProcessUserInput();
             ProcessObstacles();
-
+            counter++;
 
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
@@ -230,6 +232,11 @@ namespace WindesHeim_Game
 
                 if(gameObject is Explosion) {
                     g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                    
+                    {
+
+                    }
+                    
                 }
             }
         }
