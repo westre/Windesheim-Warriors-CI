@@ -11,7 +11,7 @@ namespace WindesHeim_Game {
 
         public StaticObstacle(Point location, int height, int width) : base (location, height, width)
         {
-            base.ImageURL = "../IconTC.png";
+            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\IconTC.png";
         }
     }
 }
