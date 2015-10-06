@@ -36,7 +36,7 @@ namespace WindesHeim_Game
             {
                 Console.WriteLine("title: " + r.Title + " difficulty: " + r.Difficulty);
             }
-            
+
         }
 
         public void Write()
@@ -88,7 +88,7 @@ namespace WindesHeim_Game
             xmlWriter.WriteEndElement();
 
             xmlWriter.WriteStartElement("highscores");
-            
+
             xmlWriter.WriteStartElement("highscore");
 
             xmlWriter.WriteStartElement("name");
