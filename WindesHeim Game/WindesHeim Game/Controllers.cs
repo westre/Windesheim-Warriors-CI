@@ -70,7 +70,8 @@ namespace WindesHeim_Game
         private bool pressedRight = false;
         private bool pressedUp = false;
         private bool pressedDown = false;
-        private bool isKeyDown = false;
+        private bool pressedSpeed = false;
+       
 
         public ControllerGame(GameWindow form) : base(form)
         {
@@ -94,18 +95,25 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame) model;
 
-            if (pressedDown && isKeyDown) {
+
+            if (pressedSpeed)
+            {
+                mg.player.Speed = 10;
+              
+            }
+            if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
             }
-            if (pressedUp && isKeyDown) {
+            if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
             }
-            if (pressedLeft && isKeyDown) {
+            if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X ) {
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
             }
-            if (pressedRight && isKeyDown) {
+            if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
             }
+            
         }
 
         private void ProcessObstacles() 
@@ -136,45 +144,58 @@ namespace WindesHeim_Game
             }
         }
 
-        public void OnKeyDown(object sender, KeyEventArgs e) {
-            if(!isKeyDown) {
-                isKeyDown = true;
-
-                pressedDown = false;
-                pressedLeft = false;
-                pressedRight = false;
-                pressedUp = false;
-            }
-
-            Console.WriteLine("KeyDown");
-        }
-
-        public void OnKeyPress(object sender, KeyPressEventArgs e) {
+        public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
             // Dit werkt nog niet fijn
-            if (e.KeyChar == 'w') {
+            if (e.KeyCode == Keys.W) {
                 pressedUp = true;
             }
-            if (e.KeyChar == 's') {
+            if (e.KeyCode == Keys.S) {
                 pressedDown = true;
             }
-            if (e.KeyChar == 'a') {
+            if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
                 mg.player.ImageURL = "../PlayerLeft.png";
             }
-            if (e.KeyChar == 'd') {
+            if (e.KeyCode == Keys.D) {
                 pressedRight = true;
                 mg.player.ImageURL = "../Player.png";
+            }
+            if (e.KeyCode == Keys.Space)
+            {
+                pressedSpeed = true;
             }
         }
 
         public void OnKeyUp(object sender, KeyEventArgs e) {
-            if (isKeyDown) {
-                isKeyDown = false;
+            ModelGame mg = (ModelGame)model;
+            if (e.KeyCode == Keys.W)
+            {
+                pressedUp = false;
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                pressedDown = false;
+            }
+            if (e.KeyCode == Keys.A)
+            {
+                pressedLeft = false;
+                
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                pressedRight = false;
+               
+            }
+            if (e.KeyCode == Keys.Space)
+            {
+                pressedSpeed = false;
+                mg.player.Speed = 5;
+
             }
 
-            Console.WriteLine("KeyUp");
+          
         }
     }
 
