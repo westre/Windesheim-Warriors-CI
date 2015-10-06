@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -112,9 +113,59 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame) model;
 
-            // Loop door alle FollowingObstacle objecten en roep methode aan
-            foreach(FollowingObstacle followingObstacle in mg.GameObjects) {
-                followingObstacle.ChasePlayer(mg.player);
+            // We moeten een 2e array maken om door heen te loopen
+            // Er is kans dat we de array door lopen en ook tegelijkertijd een explosie toevoegen
+            // We voegen dan als het ware iets toe en lezen tegelijk, dit mag niet
+            List<GameObject> safeListArray = new List<GameObject>(mg.GameObjects);
+
+            // Loop door alle obstacles objecten en roep methode aan
+            foreach(GameObject gameObject in safeListArray) {
+                if(gameObject is MovingExplodingObstacle) {
+                    MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
+                    gameObstacle.ChasePlayer(mg.player);
+
+                    if(gameObstacle.CollidesWith(mg.player)) {
+                        mg.player.Location = new Point(0, 0);
+
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location));
+                    }
+                }
+
+                if (gameObject is SlowingObstacle) {
+                    SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
+                    gameObstacle.ChasePlayer(mg.player);
+
+                    if(gameObstacle.CollidesWith(mg.player)) {
+                        mg.player.Speed = 2;
+                    }
+                    else {
+                        mg.player.Speed = 5;
+                    }
+                }
+
+                if (gameObject is ExplodingObstacle) {
+                    ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
+
+                    if (gameObstacle.CollidesWith(mg.player)) {
+                        mg.player.Location = new Point(0, 0);
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location));
+                    }
+                }
+
+                // Check of we de explosie kunnen verwijderen
+                if(gameObject is Explosion) {
+                    Explosion explosion = (Explosion)gameObject;
+
+                    DateTime nowDateTime = DateTime.Now;
+                    DateTime explosionDateTime = explosion.TimeStamp;
+
+                    TimeSpan difference = nowDateTime - explosionDateTime;
+
+                    // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
+                    if(difference.TotalSeconds > 3) {
+                        mg.GameObjects.Remove(gameObject);
+                    }
+                }
             }      
         }
 
@@ -125,14 +176,20 @@ namespace WindesHeim_Game
 
         public void OnPaintEvent(object sender, PaintEventArgs pe) {
             Graphics g = pe.Graphics;
-            ModelGame mg = (ModelGame)model;
+            ModelGame mg = (ModelGame)model;          
 
             // Teken player
-            g.DrawImage(Image.FromFile(mg.player.ImageURL), new Point(mg.player.Location.X, mg.player.Location.Y));
+            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, 64, 64);
 
             // Teken andere gameobjects
-            foreach (FollowingObstacle followingObstacle in mg.GameObjects) {
-                g.DrawImage(Image.FromFile(followingObstacle.ImageURL), new Point(followingObstacle.Location.X, followingObstacle.Location.Y));
+            foreach (GameObject gameObject in mg.GameObjects) {
+                if(gameObject is Obstacle) {
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, 64, 64);
+                }
+
+                if(gameObject is Explosion) {
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, 64, 64);
+                }
             }
         }
 

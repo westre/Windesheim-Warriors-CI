@@ -9,9 +9,16 @@ namespace WindesHeim_Game {
 
     public class Obstacle : GameObject 
     {
-        public Obstacle(Point location, string imageURL) : base (location, imageURL)
+        public Obstacle(Point location) : base (location)
         {
             
+        }
+
+        protected double GetDistance(Point q) {
+            double a = Location.X - q.X;
+            double b = Location.Y - q.Y;
+            double distance = Math.Sqrt(a * a + b * b);
+            return distance;
         }
     }
 }

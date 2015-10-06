@@ -12,9 +12,10 @@ namespace WindesHeim_Game
         private int lives;
         private int speed;
 
-        public Player(Point location, string imageURL) : base (location, imageURL)
+        public Player(Point location) : base (location)
         {
-            this.speed = 2;
+            base.ImageURL = "../Player.png";
+            this.speed = 5;
         }
 
         public int Speed

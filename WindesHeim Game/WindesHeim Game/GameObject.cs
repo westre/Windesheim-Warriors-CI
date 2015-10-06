@@ -13,9 +13,8 @@ namespace WindesHeim_Game
         private Point location;
         private string imageURL;
 
-        public GameObject(Point location, string imageURL)
+        public GameObject(Point location)
         {
-            this.imageURL = imageURL;
             this.location = location;
         }
 

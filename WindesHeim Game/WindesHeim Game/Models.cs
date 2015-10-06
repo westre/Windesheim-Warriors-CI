@@ -100,7 +100,7 @@ namespace WindesHeim_Game
         private List<GameObject> gameObjects;
         
         // Er is maar 1 speler
-        public Player player = new Player(new Point(10, 10), "../Player.png");
+        public Player player = new Player(new Point(10, 10));
 
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
@@ -114,9 +114,10 @@ namespace WindesHeim_Game
             gameObjects = new List<GameObject>();
             
             // Toevoegen aan list, zodat we het kunnen volgen
-            gameObjects.Add(new FollowingObstacle(new Point(20, 20), "../Player.png"));
-            gameObjects.Add(new FollowingObstacle(new Point(360, 20), "../Player.png"));
-            gameObjects.Add(new FollowingObstacle(new Point(120, 520), "../Player.png"));
+            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20)));
+            gameObjects.Add(new StaticObstacle(new Point(150, 200)));
+            gameObjects.Add(new ExplodingObstacle(new Point(380, 400)));
+            gameObjects.Add(new SlowingObstacle(new Point(420, 100)));
         }
 
         public override void ControlsInit(Form gameWindow)
@@ -127,7 +128,7 @@ namespace WindesHeim_Game
             gameWindow.KeyUp += gameController.OnKeyUp;
 
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
-            graphicsPanel.BackColor = Color.SeaGreen; // testje
+            graphicsPanel.BackColor = Color.SeaGreen;
             graphicsPanel.Location = new Point(0, 0);
             graphicsPanel.Size = new Size(845, 475);
             graphicsPanel.Paint += gameController.OnPaintEvent;
