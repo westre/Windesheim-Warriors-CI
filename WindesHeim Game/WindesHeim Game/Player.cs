@@ -13,12 +13,12 @@ namespace WindesHeim_Game
         private int speed;
         private int speedDuration = 0;
         private int speedCooldown = 0;
-        private int height = 175;
-        private int width = 175;
+      
 
-        public Player(Point location, string imageURL) : base (location, imageURL)
+        public Player(Point location, string imageURL, int height, int width) : base (location, imageURL, height, width)
         {
             this.speed = 5;
+           
         }
 
         
@@ -41,16 +41,7 @@ namespace WindesHeim_Game
         }
 
 
-        public int Height
-        {
-            get { return height; }
-            
-        }
 
-        public int Width
-        {
-            get { return width; }
-        }
     }
 
 }

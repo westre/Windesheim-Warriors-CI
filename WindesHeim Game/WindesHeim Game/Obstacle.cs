@@ -9,7 +9,7 @@ namespace WindesHeim_Game {
 
     public class Obstacle : GameObject 
     {
-        public Obstacle(Point location, string imageURL) : base (location, imageURL)
+        public Obstacle(Point location, string imageURL, int height, int width) : base (location, imageURL, height, width)
         {
             
         }

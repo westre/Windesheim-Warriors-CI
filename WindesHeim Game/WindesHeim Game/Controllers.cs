@@ -71,7 +71,7 @@ namespace WindesHeim_Game
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
-        private int tickcounter = 0;
+       
        
 
         public ControllerGame(GameWindow form) : base(form)
@@ -151,11 +151,11 @@ namespace WindesHeim_Game
             ModelGame mg = (ModelGame)model;
 
             // Teken player
-            g.DrawImage(Image.FromFile(mg.player.ImageURL), new Point(mg.player.Location.X, mg.player.Location.Y));
+            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
 
             // Teken andere gameobjects
             foreach (FollowingObstacle followingObstacle in mg.GameObjects) {
-                g.DrawImage(Image.FromFile(followingObstacle.ImageURL), new Point(followingObstacle.Location.X, followingObstacle.Location.Y));
+                g.DrawImage(Image.FromFile(followingObstacle.ImageURL), followingObstacle.Location.X, followingObstacle.Location.Y, followingObstacle.Width, followingObstacle.Height);
             }
         }
 

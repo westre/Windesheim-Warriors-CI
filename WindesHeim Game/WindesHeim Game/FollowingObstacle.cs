@@ -9,7 +9,7 @@ namespace WindesHeim_Game {
 
     class FollowingObstacle : Obstacle {
 
-        public FollowingObstacle(Point location, string imageURL) : base (location, imageURL)
+        public FollowingObstacle(Point location, string imageURL, int height, int width) : base (location, imageURL, height, width)
         {
 
         }

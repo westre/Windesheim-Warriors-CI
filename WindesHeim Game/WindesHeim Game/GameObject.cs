@@ -12,11 +12,15 @@ namespace WindesHeim_Game
     {
         private Point location;
         private string imageURL;
+        private int height;
+        private int width;
 
-        public GameObject(Point location, string imageURL)
+        public GameObject(Point location, string imageURL, int height, int width)
         {
             this.imageURL = imageURL;
             this.location = location;
+            this.height = height;
+            this.width = width;
         }
 
         public Point Location
@@ -28,6 +32,16 @@ namespace WindesHeim_Game
         public string ImageURL {
             get { return imageURL; }
             set { imageURL = value; }
+        }
+        public int Height
+        {
+            get { return height; }
+
+        }
+
+        public int Width
+        {
+            get { return width; }
         }
     }
 }
