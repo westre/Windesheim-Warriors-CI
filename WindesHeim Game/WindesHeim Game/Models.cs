@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -100,12 +101,24 @@ namespace WindesHeim_Game
         private List<GameObject> gameObjects;
         
         // Er is maar 1 speler
-        public Player player = new Player(new Point(10, 10));
+        public Player player = new Player(new Point(10, 10), 80, 80);
 
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
 
-        public Panel panel2 = new Panel();
+        // Obstakelpanels
+        public Panel obstaclePanel1 = new Panel();
+
+        public Panel obstaclePanel2 = new Panel();
+
+        // Titelpaneel
+        public Panel gameTitlePanel = new Panel();
+
+        // Karakterpaneel
+        public Panel characterPanel = new Panel();
+
+        // Bedieningspaneel
+        public Panel controlsPanel = new Panel();
 
         public ModelGame(ControllerGame controller) : base(controller)
         {
@@ -114,33 +127,54 @@ namespace WindesHeim_Game
             gameObjects = new List<GameObject>();
             
             // Toevoegen aan list, zodat we het kunnen volgen
-            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20)));
-            gameObjects.Add(new StaticObstacle(new Point(150, 200)));
-            gameObjects.Add(new ExplodingObstacle(new Point(380, 400)));
-            gameObjects.Add(new SlowingObstacle(new Point(420, 100)));
+            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20), 80, 80));
+            gameObjects.Add(new StaticObstacle(new Point(150, 200), 80, 80));
+            gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 80, 80));
+            gameObjects.Add(new SlowingObstacle(new Point(420, 100), 80, 80));
         }
 
         public override void ControlsInit(Form gameWindow)
         {
             // Registreer key events voor de player
-            gameWindow.KeyDown += gameController.OnKeyDown;
-            gameWindow.KeyPress += gameController.OnKeyPress;
+            gameWindow.KeyDown += gameController.OnKeyDownWASD;
             gameWindow.KeyUp += gameController.OnKeyUp;
 
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
             graphicsPanel.BackColor = Color.SeaGreen;
             graphicsPanel.Location = new Point(0, 0);
-            graphicsPanel.Size = new Size(845, 475);
+            graphicsPanel.Size = new Size(845, 480);
             graphicsPanel.Paint += gameController.OnPaintEvent;
 
-            panel2.Location = new Point(845, 0);
-            panel2.Size = new Size(100, 100);
-            panel2.BackColor = Color.Red;
+            // Overige panels
+
+            obstaclePanel1.Location = new Point(845, 0);
+            obstaclePanel1.Size = new Size(445, 240);
+            obstaclePanel1.BackColor = Color.White;
+
+            obstaclePanel2.Location = new Point(845, 240);
+            obstaclePanel2.Size = new Size(445, 240);
+            obstaclePanel2.BackColor = Color.White;
+
+            gameTitlePanel.Location = new Point(845, 480);
+            gameTitlePanel.Size = new Size(445, 240);
+            gameTitlePanel.BackColor = Color.White;
+
+            controlsPanel.Location = new Point(0, 480);
+            controlsPanel.Size = new Size(445, 240);
+            controlsPanel.BackColor = Color.White;
+
+            characterPanel.Location = new Point(445, 480);
+            characterPanel.Size = new Size(445, 240);
+            characterPanel.BackColor = Color.White;
 
             // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
 
             gameWindow.Controls.Add(graphicsPanel);
-            gameWindow.Controls.Add(panel2);
+            gameWindow.Controls.Add(obstaclePanel1);
+            gameWindow.Controls.Add(obstaclePanel2);
+            gameWindow.Controls.Add(gameTitlePanel);
+            gameWindow.Controls.Add(controlsPanel);
+            gameWindow.Controls.Add(characterPanel);
         }
 
         public List<GameObject> GameObjects {
@@ -152,7 +186,11 @@ namespace WindesHeim_Game
     {
         private ListBox levels;
         private Button goBack;
+        private Button playLevel;
+        private Label labelLevels;
+        private Label labelLevelPreview;
         private Panel alignPanel;
+        private Panel gamePanel;
 
         private ControllerLevelSelect levelSelectController;
 
@@ -162,27 +200,59 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow) {
             alignPanel = new Panel();
-            alignPanel.Location = new System.Drawing.Point(60, 60);
-            alignPanel.Size = new System.Drawing.Size(500, 500);
+            alignPanel.AutoSize = true;
+
+
+            gamePanel = new Panel();
+            gamePanel.Location = new System.Drawing.Point(210, 40);
+            gamePanel.Size = new System.Drawing.Size(845, 475);
+            gamePanel.BackColor = Color.DarkGray;
 
 
             levels = new ListBox();
-            levels.Size = new System.Drawing.Size(200, 100);
-            levels.Location = new System.Drawing.Point(10, 10);
-            for (int i = 0; i < 11; i ++)
-            {
-                levels.Items.Add("Level " + i);
-            }
+            levels.Size = new System.Drawing.Size(200, 475);
+            levels.Location = new System.Drawing.Point(0, 40);
+            string[] fileEntries = Directory.GetFiles("../levels/");
+            foreach (string fileName in fileEntries)
+                levels.Items.Add(Path.GetFileName(fileName));
+
+            labelLevels = new Label();
+            labelLevels.Text = "Levels";
+            labelLevels.Font = new Font("Arial", 20);
+            labelLevels.Location = new System.Drawing.Point(0, 0);
+            labelLevels.Size = new System.Drawing.Size(200, 30);
+            labelLevels.TextAlign = ContentAlignment.MiddleCenter;
+
+            labelLevelPreview = new Label();
+            labelLevelPreview.Text = "Level Preview";
+            labelLevelPreview.Font = new Font("Arial", 20);
+            labelLevelPreview.Location = new System.Drawing.Point(210, 0);
+            labelLevelPreview.Size = new System.Drawing.Size(845, 30);
+            labelLevelPreview.TextAlign = ContentAlignment.MiddleCenter;
 
             goBack = new Button();
             goBack.Size = new System.Drawing.Size(200, 25);
-            goBack.Location = new System.Drawing.Point(10, 115);
+            goBack.Location = new System.Drawing.Point(0, 525);
             goBack.Text = "Go Back";
             goBack.Click += new EventHandler(levelSelectController.goBack_Click);
 
+            playLevel = new Button();
+            playLevel.Size = new System.Drawing.Size(845, 25);
+            playLevel.Location = new System.Drawing.Point(210, 525);
+            playLevel.Text = "Play Level";
+            playLevel.Click += new EventHandler(levelSelectController.goBack_Click);
+
             gameWindow.Controls.Add(alignPanel);
+            alignPanel.Controls.Add(labelLevels);
+            alignPanel.Controls.Add(labelLevelPreview);
             alignPanel.Controls.Add(goBack);
+            alignPanel.Controls.Add(playLevel);
             alignPanel.Controls.Add(levels);
+            alignPanel.Controls.Add(gamePanel);
+            alignPanel.Location = new Point(
+                (gameWindow.Width / 2 - alignPanel.Size.Width / 2),
+                (gameWindow.Height / 2 - alignPanel.Size.Height / 2));
+            alignPanel.Anchor = AnchorStyles.None;
         }
     }
 
