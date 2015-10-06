@@ -50,7 +50,6 @@ namespace WindesHeim_Game
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
             this.ResumeLayout(false);
-
         }
 
         public void setController(ScreenStates state)
@@ -86,7 +85,9 @@ namespace WindesHeim_Game
 
         protected override void OnPaint(PaintEventArgs pe)
         {
+            base.OnPaint(pe);
             Graphics g = pe.Graphics;
+
             switch (state)
             {
                 case ScreenStates.menu:

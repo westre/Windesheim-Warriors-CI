@@ -90,7 +90,7 @@ namespace WindesHeim_Game
             //XML test = new XML("");
             //test.Read();            
         }
-        }
+    }
 
     public class ModelGame : Model {
         private ControllerGame gameController;
@@ -100,6 +100,9 @@ namespace WindesHeim_Game
         
         // Er is maar 1 speler
         public Player player = new Player(new Point(10, 10), "../Player.png");
+
+        // Graphicspaneel
+        public PictureBox graphicsPanel = new PictureBox();
 
         public ModelGame(ControllerGame controller) : base(controller)
         {
@@ -115,18 +118,20 @@ namespace WindesHeim_Game
 
         public override void ControlsInit(Form gameWindow)
         {
-            // Voeg speler toe aan panel
-            gameWindow.Controls.Add(player.Image);
-
-            // Voeg alle gameobjecten toe aan panel
-            foreach(GameObject gameObject in gameObjects) {
-                gameWindow.Controls.Add(gameObject.Image);
-            }
-          
             // Registreer key events voor de player
             gameWindow.KeyDown += gameController.OnKeyDown;
             gameWindow.KeyPress += gameController.OnKeyPress;
             gameWindow.KeyUp += gameController.OnKeyUp;
+
+            // Voeg graphicspaneel toe voor het tekenen van gameobjecten
+            graphicsPanel.BackColor = Color.SeaGreen; // testje
+            graphicsPanel.Location = new Point(0, 0);
+            graphicsPanel.Size = new Size(1000, 500);
+            graphicsPanel.Paint += gameController.OnPaintEvent;
+
+            // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
+
+            gameWindow.Controls.Add(graphicsPanel);
         }
 
         public List<GameObject> GameObjects {
