@@ -1,4 +1,2 @@
 ﻿language: csharp
-before_script: cd "WindesHeim Game"
-before_install: cd "WindesHeim Game"
-solution: "WindesHeim Game.sln"
+script: xbuild /version && xbuild /version && xbuild /version
