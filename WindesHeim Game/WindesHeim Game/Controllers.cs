@@ -70,6 +70,7 @@ namespace WindesHeim_Game
         private bool pressedRight = false;
         private bool pressedUp = false;
         private bool pressedDown = false;
+        private bool pressedSpeed = false;
        
 
         public ControllerGame(GameWindow form) : base(form)
@@ -93,7 +94,13 @@ namespace WindesHeim_Game
         private void ProcessUserInput() 
         {
             ModelGame mg = (ModelGame) model;
-            
+
+
+            if (pressedSpeed)
+            {
+                mg.player.Speed = 10;
+              
+            }
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
             }
@@ -106,6 +113,7 @@ namespace WindesHeim_Game
             if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
             }
+            
         }
 
         private void ProcessObstacles() 
@@ -154,9 +162,14 @@ namespace WindesHeim_Game
                 pressedRight = true;
                 mg.player.ImageURL = "../Player.png";
             }
+            if (e.KeyCode == Keys.Space)
+            {
+                pressedSpeed = true;
+            }
         }
 
         public void OnKeyUp(object sender, KeyEventArgs e) {
+            ModelGame mg = (ModelGame)model;
             if (e.KeyCode == Keys.W)
             {
                 pressedUp = false;
@@ -175,8 +188,14 @@ namespace WindesHeim_Game
                 pressedRight = false;
                
             }
+            if (e.KeyCode == Keys.Space)
+            {
+                pressedSpeed = false;
+                mg.player.Speed = 5;
 
-            Console.WriteLine("KeyUp");
+            }
+
+          
         }
     }
 
