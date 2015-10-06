@@ -101,7 +101,7 @@ namespace WindesHeim_Game
         private List<GameObject> gameObjects = new List<GameObject>();
         
         // Er is maar 1 speler
-        public Player player = new Player(new Point(10, 10), 80, 80);
+        public Player player = new Player(new Point(10, 10), 40, 40);
 
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
@@ -131,10 +131,10 @@ namespace WindesHeim_Game
             gameObjects.Clear();
 
             // Toevoegen aan list, zodat we het kunnen volgen
-            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20), 80, 80));
-            gameObjects.Add(new StaticObstacle(new Point(150, 200), 80, 80));
-            gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 80, 80));
-            gameObjects.Add(new SlowingObstacle(new Point(420, 100), 80, 80));
+            gameObjects.Add(new MovingExplodingObstacle(new Point(520, 20), 40, 40));
+            gameObjects.Add(new StaticObstacle(new Point(150, 200), 40, 40));
+            gameObjects.Add(new ExplodingObstacle(new Point(380, 400), 40, 40));
+            gameObjects.Add(new SlowingObstacle(new Point(420, 100), 40, 40));
         }
 
         public override void ControlsInit(Form gameWindow)

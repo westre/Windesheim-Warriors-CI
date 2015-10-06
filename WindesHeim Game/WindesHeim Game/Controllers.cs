@@ -105,15 +105,15 @@ namespace WindesHeim_Game
 
             if (pressedSpeed && (mg.player.SpeedCooldown == 0))
             {
-                mg.player.Speed = 10;
+                mg.player.Speed = mg.player.OriginalSpeed * 2;
 
                 mg.player.SpeedDuration ++;
        
             }
-            if(mg.player.SpeedDuration > 60)
+            if(mg.player.SpeedDuration > 50)
             {
                 mg.player.SpeedDuration = 0;
-                mg.player.Speed = 5;
+                mg.player.Speed = mg.player.OriginalSpeed;
                 mg.player.SpeedCooldown = 200;
             }
 
@@ -159,10 +159,10 @@ namespace WindesHeim_Game
                     gameObstacle.ChasePlayer(mg.player);
 
                     if(gameObstacle.CollidesWith(mg.player)) {
-                        mg.player.Speed = 2;
+                        mg.player.Speed = mg.player.OriginalSpeed / 2;
                     }
                     else {
-                        mg.player.Speed = 5;
+                        mg.player.Speed = mg.player.OriginalSpeed;
                     }
                 }
 
@@ -208,11 +208,11 @@ namespace WindesHeim_Game
             // Teken andere gameobjects
             foreach (GameObject gameObject in mg.GameObjects) {
                 if(gameObject is Obstacle) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, 64, 64);
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
 
                 if(gameObject is Explosion) {
-                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, 64, 64);
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
                 }
             }
         }
