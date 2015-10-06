@@ -70,7 +70,7 @@ namespace WindesHeim_Game
         private bool pressedRight = false;
         private bool pressedUp = false;
         private bool pressedDown = false;
-        private bool isKeyDown = false;
+       
 
         public ControllerGame(GameWindow form) : base(form)
         {
@@ -93,17 +93,17 @@ namespace WindesHeim_Game
         private void ProcessUserInput() 
         {
             ModelGame mg = (ModelGame) model;
-
-            if (pressedDown) {
+            
+            if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
             }
-            if (pressedUp) {
+            if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
             }
-            if (pressedLeft) {
+            if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X ) {
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
             }
-            if (pressedRight) {
+            if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
             }
         }

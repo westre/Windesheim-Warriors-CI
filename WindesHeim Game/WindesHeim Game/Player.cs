@@ -11,16 +11,31 @@ namespace WindesHeim_Game
     {
         private int lives;
         private int speed;
+        private int height = 175;
+        private int width = 175;
 
         public Player(Point location, string imageURL) : base (location, imageURL)
         {
             this.speed = 5;
         }
 
+        
+
         public int Speed
         {
             get { return speed; }
             set { speed = value; }
+        }
+
+        public int Height
+        {
+            get { return height; }
+            
+        }
+
+        public int Width
+        {
+            get { return width; }
         }
     }
 
