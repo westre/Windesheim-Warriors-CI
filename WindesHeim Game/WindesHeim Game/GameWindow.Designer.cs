@@ -18,6 +18,7 @@ namespace WindesHeim_Game
     {
         private ControllerMenu menu;
         private ControllerGame game;
+        private ControllerLevelSelect levelSelect;
 
         private ScreenStates state = ScreenStates.menu;
         private System.ComponentModel.IContainer components = null;
@@ -35,6 +36,7 @@ namespace WindesHeim_Game
         {
             menu = new ControllerMenu(this);
             game = new ControllerGame(this);
+            levelSelect = new ControllerLevelSelect(this);
 
             this.setController(ScreenStates.menu);
 
@@ -43,11 +45,11 @@ namespace WindesHeim_Game
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 720);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             this.Name = "Form1";
             this.Text = "Windesheim Warriors";
             this.ResumeLayout(false);
-
         }
 
         public void setController(ScreenStates state)
@@ -60,6 +62,7 @@ namespace WindesHeim_Game
                     break;
                 case ScreenStates.gameSelect:
                     this.state = ScreenStates.gameSelect;
+                    levelSelect.RunController();
                     break;
                 case ScreenStates.game:
                     this.state = ScreenStates.game;
@@ -82,7 +85,9 @@ namespace WindesHeim_Game
 
         protected override void OnPaint(PaintEventArgs pe)
         {
+            base.OnPaint(pe);
             Graphics g = pe.Graphics;
+
             switch (state)
             {
                 case ScreenStates.menu:
