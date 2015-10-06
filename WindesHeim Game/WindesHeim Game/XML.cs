@@ -16,7 +16,7 @@ namespace WindesHeim_Game
 
         public void Read()
         {
-            XDocument doc = XDocument.Load("level1.xml");
+            XDocument doc = XDocument.Load("../levels/0.xml");
 
             var properties = from r in doc.Descendants("properties")
                              select new

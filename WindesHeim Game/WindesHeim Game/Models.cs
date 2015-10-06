@@ -88,6 +88,7 @@ namespace WindesHeim_Game
 
             //XML loading test
             //XML test = new XML("");
+            //test.Write();
             //test.Read();            
         }
     }
