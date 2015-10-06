@@ -1,2 +1,2 @@
 ﻿language: csharp
-script: xbuild /version && xbuild /version && xbuild /version
+solution: WindesHeimGame.sln
