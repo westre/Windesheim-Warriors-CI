@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -70,7 +71,9 @@ namespace WindesHeim_Game
         private bool pressedRight = false;
         private bool pressedUp = false;
         private bool pressedDown = false;
-        private bool isKeyDown = false;
+        private bool pressedSpeed = false;
+
+       
 
         public ControllerGame(GameWindow form) : base(form)
         {
@@ -86,6 +89,7 @@ namespace WindesHeim_Game
             ProcessUserInput();
             ProcessObstacles();
 
+
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
         }
@@ -94,27 +98,98 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame) model;
 
-            if (pressedDown && isKeyDown) {
+            if(mg.player.SpeedCooldown > 0)
+            {
+                mg.player.SpeedCooldown--;
+            }
+
+            if (pressedSpeed && (mg.player.SpeedCooldown == 0))
+            {
+                mg.player.Speed = mg.player.OriginalSpeed * 2;
+
+                mg.player.SpeedDuration ++;
+       
+            }
+            if(mg.player.SpeedDuration > 50)
+            {
+                mg.player.SpeedDuration = 0;
+                mg.player.Speed = mg.player.OriginalSpeed;
+                mg.player.SpeedCooldown = 200;
+            }
+
+            if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
             }
-            if (pressedUp && isKeyDown) {
+            if (pressedUp && mg.player.Location.Y >= mg.graphicsPanel.Location.Y) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y - mg.player.Speed);
             }
-            if (pressedLeft && isKeyDown) {
+            if (pressedLeft && mg.player.Location.X >= mg.graphicsPanel.Location.X ) {
                 mg.player.Location = new Point(mg.player.Location.X - mg.player.Speed, mg.player.Location.Y);
             }
-            if (pressedRight && isKeyDown) {
+            if (pressedRight && mg.player.Location.X <= (mg.graphicsPanel.Size.Width + mg.graphicsPanel.Location.X) - mg.player.Width) {
                 mg.player.Location = new Point(mg.player.Location.X + mg.player.Speed, mg.player.Location.Y);
             }
+            
         }
 
         private void ProcessObstacles() 
         {
             ModelGame mg = (ModelGame) model;
 
-            // Loop door alle FollowingObstacle objecten en roep methode aan
-            foreach(FollowingObstacle followingObstacle in mg.GameObjects) {
-                followingObstacle.ChasePlayer(mg.player);
+            // We moeten een 2e array maken om door heen te loopen
+            // Er is kans dat we de array door lopen en ook tegelijkertijd een explosie toevoegen
+            // We voegen dan als het ware iets toe en lezen tegelijk, dit mag niet
+            List<GameObject> safeListArray = new List<GameObject>(mg.GameObjects);
+
+            // Loop door alle obstacles objecten en roep methode aan
+            foreach(GameObject gameObject in safeListArray) {
+                if(gameObject is MovingExplodingObstacle) {
+                    MovingExplodingObstacle gameObstacle = (MovingExplodingObstacle)gameObject;
+                    gameObstacle.ChasePlayer(mg.player);
+
+                    if(gameObstacle.CollidesWith(mg.player)) {
+                        mg.player.Location = new Point(0, 0);
+                        mg.InitializeField();
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
+                    }
+                }
+
+                if (gameObject is SlowingObstacle) {
+                    SlowingObstacle gameObstacle = (SlowingObstacle)gameObject;
+                    gameObstacle.ChasePlayer(mg.player);
+
+                    if(gameObstacle.CollidesWith(mg.player)) {
+                        mg.player.Speed = mg.player.OriginalSpeed / 2;
+                    }
+                    else {
+                        mg.player.Speed = mg.player.OriginalSpeed;
+                    }
+                }
+
+                if (gameObject is ExplodingObstacle) {
+                    ExplodingObstacle gameObstacle = (ExplodingObstacle)gameObject;
+
+                    if (gameObstacle.CollidesWith(mg.player)) {
+                        mg.player.Location = new Point(0, 0);
+                        mg.InitializeField();
+                        mg.GameObjects.Add(new Explosion(gameObstacle.Location, 80, 80));
+                    }
+                }
+
+                // Check of we de explosie kunnen verwijderen
+                if(gameObject is Explosion) {
+                    Explosion explosion = (Explosion)gameObject;
+
+                    DateTime nowDateTime = DateTime.Now;
+                    DateTime explosionDateTime = explosion.TimeStamp;
+
+                    TimeSpan difference = nowDateTime - explosionDateTime;
+
+                    // Verschil is 3 seconden, dus het bestaat al voor 3 seconden, verwijderen maar!
+                    if(difference.TotalSeconds > 3) {
+                        mg.GameObjects.Remove(gameObject);
+                    }
+                }
             }      
         }
 
@@ -128,53 +203,72 @@ namespace WindesHeim_Game
             ModelGame mg = (ModelGame)model;
 
             // Teken player
-            g.DrawImage(Image.FromFile(mg.player.ImageURL), new Point(mg.player.Location.X, mg.player.Location.Y));
+            g.DrawImage(Image.FromFile(mg.player.ImageURL), mg.player.Location.X, mg.player.Location.Y, mg.player.Width, mg.player.Height);
 
             // Teken andere gameobjects
-            foreach (FollowingObstacle followingObstacle in mg.GameObjects) {
-                g.DrawImage(Image.FromFile(followingObstacle.ImageURL), new Point(followingObstacle.Location.X, followingObstacle.Location.Y));
+            foreach (GameObject gameObject in mg.GameObjects) {
+                if(gameObject is Obstacle) {
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
+
+                if(gameObject is Explosion) {
+                    g.DrawImage(Image.FromFile(gameObject.ImageURL), gameObject.Location.X, gameObject.Location.Y, gameObject.Width, gameObject.Height);
+                }
             }
         }
 
-        public void OnKeyDown(object sender, KeyEventArgs e) {
-            if(!isKeyDown) {
-                isKeyDown = true;
-
-                pressedDown = false;
-                pressedLeft = false;
-                pressedRight = false;
-                pressedUp = false;
-            }
-
-            Console.WriteLine("KeyDown");
-        }
-
-        public void OnKeyPress(object sender, KeyPressEventArgs e) {
+        public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
-            // Dit werkt nog niet fijn
-            if (e.KeyChar == 'w') {
+
+            if (e.KeyCode == Keys.W) {
                 pressedUp = true;
             }
-            if (e.KeyChar == 's') {
+            if (e.KeyCode == Keys.S) {
                 pressedDown = true;
             }
-            if (e.KeyChar == 'a') {
+            if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
                 mg.player.ImageURL = "../PlayerLeft.png";
             }
-            if (e.KeyChar == 'd') {
+            if (e.KeyCode == Keys.D) {
                 pressedRight = true;
                 mg.player.ImageURL = "../Player.png";
             }
+            if (e.KeyCode == Keys.Space)
+            {
+                pressedSpeed = true;
+        }
         }
 
         public void OnKeyUp(object sender, KeyEventArgs e) {
-            if (isKeyDown) {
-                isKeyDown = false;
+            ModelGame mg = (ModelGame)model;
+            if (e.KeyCode == Keys.W)
+            {
+                pressedUp = false;
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                pressedDown = false;
+            }
+            if (e.KeyCode == Keys.A)
+            {
+                pressedLeft = false;
+                
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                pressedRight = false;
+               
+            }
+            if (e.KeyCode == Keys.Space)
+            {
+                pressedSpeed = false;
+                mg.player.Speed = 5;
+
             }
 
-            Console.WriteLine("KeyUp");
+          
         }
     }
 

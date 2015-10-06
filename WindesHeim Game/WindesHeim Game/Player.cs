@@ -10,11 +10,15 @@ namespace WindesHeim_Game
     public class Player : GameObject
     {
         private int lives;
-        private int speed;
+        private const int originalSpeed = 4;
+        private int speed = originalSpeed;
+        private int speedDuration = 0;
+        private int speedCooldown = 0;
 
-        public Player(Point location, string imageURL) : base (location, imageURL)
+        public Player(Point location, int height, int width) : base (location, height, width)
         {
-            this.speed = 2;
+            base.ImageURL = AppDomain.CurrentDomain.BaseDirectory + "..\\..\\resources\\Player.png";
+            
         }
 
         public int Speed
@@ -22,6 +26,25 @@ namespace WindesHeim_Game
             get { return speed; }
             set { speed = value; }
         }
+        public int OriginalSpeed
+        {
+            get { return originalSpeed; }
+
+        }
+        public int SpeedDuration
+        {
+            get { return speedDuration; }
+            set { speedDuration = value; }
+        }
+
+        public int SpeedCooldown
+        {
+            get { return speedCooldown; }
+            set { speedCooldown = value; }
+        }
+
+
+
     }
 
 }
