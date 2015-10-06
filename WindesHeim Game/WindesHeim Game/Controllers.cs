@@ -149,21 +149,21 @@ namespace WindesHeim_Game
             Console.WriteLine("KeyDown");
         }
 
-        public void OnKeyPress(object sender, KeyPressEventArgs e) {
+        public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
             // Dit werkt nog niet fijn
-            if (e.KeyChar == 'w') {
+            if (e.KeyCode == Keys.W) {
                 pressedUp = true;
             }
-            if (e.KeyChar == 's') {
+            if (e.KeyCode == Keys.S) {
                 pressedDown = true;
             }
-            if (e.KeyChar == 'a') {
+            if (e.KeyCode == Keys.A) {
                 pressedLeft = true;
                 mg.player.ImageURL = "../PlayerLeft.png";
             }
-            if (e.KeyChar == 'd') {
+            if (e.KeyCode == Keys.D) {
                 pressedRight = true;
                 mg.player.ImageURL = "../Player.png";
             }
