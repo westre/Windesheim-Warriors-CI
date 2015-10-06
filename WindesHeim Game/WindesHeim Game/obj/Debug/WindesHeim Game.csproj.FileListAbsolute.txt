@@ -44,3 +44,4 @@ C:\Users\Marten\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim 
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csproj.GenerateResource.Cache
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.exe
 C:\Users\Marten\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.pdb
+C:\Users\Marten\Documents\GitHub\Windesheim-Warriors\WindesHeim Game\WindesHeim Game\obj\Debug\WindesHeim Game.csprojResolveAssemblyReference.cache
