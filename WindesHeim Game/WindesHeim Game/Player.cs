@@ -11,6 +11,8 @@ namespace WindesHeim_Game
     {
         private int lives;
         private int speed;
+        private int speedDuration = 0;
+        private int speedCooldown = 0;
         private int height = 175;
         private int width = 175;
 
@@ -26,6 +28,18 @@ namespace WindesHeim_Game
             get { return speed; }
             set { speed = value; }
         }
+        public int SpeedDuration
+        {
+            get { return speedDuration; }
+            set { speedDuration = value; }
+        }
+
+        public int SpeedCooldown
+        {
+            get { return speedCooldown; }
+            set { speedCooldown = value; }
+        }
+
 
         public int Height
         {

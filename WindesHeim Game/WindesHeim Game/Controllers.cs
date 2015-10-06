@@ -71,6 +71,7 @@ namespace WindesHeim_Game
         private bool pressedUp = false;
         private bool pressedDown = false;
         private bool pressedSpeed = false;
+        private int tickcounter = 0;
        
 
         public ControllerGame(GameWindow form) : base(form)
@@ -86,6 +87,7 @@ namespace WindesHeim_Game
         {
             ProcessUserInput();
             ProcessObstacles();
+            
 
             ModelGame mg = (ModelGame)model;
             mg.graphicsPanel.Invalidate();
@@ -95,12 +97,25 @@ namespace WindesHeim_Game
         {
             ModelGame mg = (ModelGame) model;
 
+            if(mg.player.SpeedCooldown > 0)
+            {
+                mg.player.SpeedCooldown--;
+            }
 
-            if (pressedSpeed)
+            if (pressedSpeed && (mg.player.SpeedCooldown == 0))
             {
                 mg.player.Speed = 10;
-              
+
+                mg.player.SpeedDuration ++;
+       
             }
+            if(mg.player.SpeedDuration > 60)
+            {
+                mg.player.SpeedDuration = 0;
+                mg.player.Speed = 5;
+                mg.player.SpeedCooldown = 200;
+            }
+
             if (pressedDown && mg.player.Location.Y <= (mg.graphicsPanel.Size.Height + mg.graphicsPanel.Location.Y) - mg.player.Height) {
                 mg.player.Location = new Point(mg.player.Location.X, mg.player.Location.Y + mg.player.Speed);
             }
@@ -147,7 +162,7 @@ namespace WindesHeim_Game
         public void OnKeyDownWASD(object sender, KeyEventArgs e) {
             ModelGame mg = (ModelGame)model;
 
-            // Dit werkt nog niet fijn
+            
             if (e.KeyCode == Keys.W) {
                 pressedUp = true;
             }
