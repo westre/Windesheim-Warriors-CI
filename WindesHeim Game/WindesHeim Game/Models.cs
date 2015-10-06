@@ -87,8 +87,8 @@ namespace WindesHeim_Game
             gameWindow.Controls.Add(tempPlay);
 
             //XML loading test
-            //XML test = new XML("");
-            //test.Read();            
+            XML test = new XML("");
+            test.Read();            
         }
     }
 
