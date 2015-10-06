@@ -1,5 +1,4 @@
 ﻿language: csharp
-solution: "WindesHeim Game.sln"
 script:
   - cd "WindesHeim Game"
   - xbuild /p:Configuration=Release "WindesHeim Game.sln"
