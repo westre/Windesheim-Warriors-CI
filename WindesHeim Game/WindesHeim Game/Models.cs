@@ -104,6 +104,8 @@ namespace WindesHeim_Game
         // Graphicspaneel
         public PictureBox graphicsPanel = new PictureBox();
 
+        public Panel panel2 = new Panel();
+
         public ModelGame(ControllerGame controller) : base(controller)
         {
             this.gameController = controller;
@@ -126,12 +128,17 @@ namespace WindesHeim_Game
             // Voeg graphicspaneel toe voor het tekenen van gameobjecten
             graphicsPanel.BackColor = Color.SeaGreen; // testje
             graphicsPanel.Location = new Point(0, 0);
-            graphicsPanel.Size = new Size(1000, 500);
+            graphicsPanel.Size = new Size(845, 475);
             graphicsPanel.Paint += gameController.OnPaintEvent;
+
+            panel2.Location = new Point(845, 0);
+            panel2.Size = new Size(100, 100);
+            panel2.BackColor = Color.Red;
 
             // Voeg hieronder de overige panels toe, zoals objectbeschrijvingen etc.
 
             gameWindow.Controls.Add(graphicsPanel);
+            gameWindow.Controls.Add(panel2);
         }
 
         public List<GameObject> GameObjects {
