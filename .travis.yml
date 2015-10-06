@@ -1,4 +1,3 @@
 ﻿language: csharp
 script:
-  - cd "WindesHeim Game"
-  - xbuild /p:Configuration=Release "WindesHeim Game.sln"
+  - xbuild /p:Configuration=Release "WindesHeim Game/WindesHeim Game.sln"
