@@ -12,39 +12,22 @@ namespace WindesHeim_Game
     {
         private Point location;
         private string imageURL;
-        private PictureBox image;
 
         public GameObject(Point location, string imageURL)
         {
             this.imageURL = imageURL;
             this.location = location;
-            this.image = new PictureBox();
-
-            imageLoad();
-        }
-
-        private void imageLoad()
-        {
-            this.image.Load(imageURL);
-            this.image.Location = location;
-            this.image.Name = "pictureBox2";
-            this.image.Size = new System.Drawing.Size(128, 128);
-            this.image.TabIndex = 1;
-            this.image.TabStop = false;
-        }
-
-        public PictureBox Image
-        {
-            get { return image; }
         }
 
         public Point Location
         {
             get { return location; }
-            set {
-                image.Location = value;
-                location = value;
-            }
+            set { location = value; }
+        }
+
+        public string ImageURL {
+            get { return imageURL; }
+            set { imageURL = value; }
         }
     }
 }
